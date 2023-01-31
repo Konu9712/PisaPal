@@ -1,18 +1,14 @@
-import React, { Component } from 'react'
+import React from "react";
 
-export default class SignUpForm extends Component {
-  render() {
-    return (
+export const Signup = () => {
+  return (
+    <div>
       <form>
         <h3>Register</h3>
 
         <div className="mt-3 mb-3">
           <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Name"
-          />
+          <input type="text" className="form-control" placeholder="Name" />
         </div>
 
         <div className="mb-3">
@@ -47,8 +43,7 @@ export default class SignUpForm extends Component {
             Sign Up
           </button>
         </div>
-    
       </form>
-    )
-  }
-}
+    </div>
+  );
+};
