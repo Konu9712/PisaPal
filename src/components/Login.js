@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from "react";
 
-export default class LoginForm extends Component {
-  render() {
-    return (
+export const Login = () => {
+  return (
+    <div>
       <form>
         <h3>Login</h3>
 
@@ -29,8 +29,7 @@ export default class LoginForm extends Component {
             Submit
           </button>
         </div>
-       
       </form>
-    )
-  }
-}
+    </div>
+  );
+};
