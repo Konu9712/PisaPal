@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 export const Signup = () => {
   const [user, setUser] = useState({
     name: "",
@@ -15,12 +14,31 @@ export const Signup = () => {
     setUser({ ...user, [type]: e.target.value });
   };
 
-  const onSubmitBtn = (e) => {
+  const onSubmitBtn = async (e) => {
     e.preventDefault();
     if (user.password !== user.cpassword) {
       setError("Password and Confirm Password must be same");
     } else {
-      console.log("Success");
+      //post request
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+          name: user.name,
+        }),
+      };
+      fetch("http://localhost:8000/auth/signup", requestOptions).then(
+        async (response) => {
+          if (response.status === 200) {
+            console.log("success");
+          } else if (response.status === 400) {
+            response = await response.json();
+            setError(response.error);
+          }
+        }
+      );
       setError("");
     }
   };
