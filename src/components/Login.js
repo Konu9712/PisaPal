@@ -81,7 +81,7 @@ export const Login = () => {
             type="submit"
             className="btn btn-primary"
             onClick={(e) => onSubmitBtn(e)}
-          >
+            >
             Submit
           </button>
         </div>

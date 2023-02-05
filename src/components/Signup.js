@@ -44,6 +44,7 @@ export const Signup = () => {
     setErrors(formErrors);
 
     if (!Object.keys(formErrors).length) {
+
       //post request
       const requestOptions = {
         method: "POST",
@@ -54,6 +55,7 @@ export const Signup = () => {
           name: user.name,
         }),
       };
+
       fetch("http://localhost:8000/auth/signup", requestOptions).then(
         async (response) => {
           if (response.status === 200) {
@@ -66,8 +68,11 @@ export const Signup = () => {
           }
         }
       );
+
       setErrors({});
+
     }
+
   };
 
   return (
