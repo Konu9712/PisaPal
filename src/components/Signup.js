@@ -68,7 +68,7 @@ export const Signup = () => {
           }
         }
       );
-      
+
       setErrors({});
 
     }
@@ -128,7 +128,7 @@ export const Signup = () => {
         </div>
         {errors.cpassword && <div className="error">{errors.cpassword}</div>}
 
-        <div className="d-grid mt-3">
+        <div className="d-grid mt-4">
           <button
             type="submit"
             className="btn btn-primary"
