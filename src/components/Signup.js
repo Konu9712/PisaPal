@@ -9,7 +9,7 @@ export const Signup = () => {
     password: "",
     cpassword: "",
   });
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = (e, type) => {
     e.preventDefault();
@@ -18,9 +18,33 @@ export const Signup = () => {
 
   const onSubmitBtn = async (e) => {
     e.preventDefault();
-    if (user.password !== user.cpassword) {
-      setError("Password and Confirm Password must be same");
-    } else {
+
+    let formErrors = {};
+
+    if (!user.name) {
+      formErrors.name = "Name is required";
+    }
+
+    if (!user.email) {
+      formErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(user.email)) {
+      formErrors.email = "Email address is invalid";
+    }
+
+    if (!user.password) {
+      formErrors.password = "Password is required";
+    }
+
+    if (!user.cpassword) {
+      formErrors.cpassword = "Confirm Password is required";
+    } else if(user.password !== user.cpassword) {
+      formErrors.cpassword = "Password and Confirm Password must be same";
+    }
+
+    setErrors(formErrors);
+
+    if (!Object.keys(formErrors).length) {
+
       //post request
       const requestOptions = {
         method: "POST",
@@ -31,6 +55,7 @@ export const Signup = () => {
           name: user.name,
         }),
       };
+
       fetch("http://localhost:8000/auth/signup", requestOptions).then(
         async (response) => {
           if (response.status === 200) {
@@ -38,12 +63,16 @@ export const Signup = () => {
             navigate("/sign-in");
           } else if (response.status === 400) {
             response = await response.json();
-            setError(response.error);
+            formErrors.cpassword = response.error;
+            setErrors(formErrors);
           }
         }
       );
-      setError("");
+      
+      setErrors({});
+
     }
+
   };
 
   return (
@@ -51,7 +80,7 @@ export const Signup = () => {
       <form>
         <h3>Register</h3>
 
-        <div className="mt-3 mb-3">
+        <div className="mt-3">
           <label>Name</label>
           <input
             type="text"
@@ -61,8 +90,9 @@ export const Signup = () => {
             onChange={(e) => handleSubmit(e, "name")}
           />
         </div>
+        {errors.name && <div className="error">{errors.name}</div>}
 
-        <div className="mb-3">
+        <div className="mt-3">
           <label>Email address</label>
           <input
             type="email"
@@ -72,8 +102,9 @@ export const Signup = () => {
             onChange={(e) => handleSubmit(e, "email")}
           />
         </div>
+        {errors.email && <div className="error">{errors.email}</div>}
 
-        <div className="mb-3">
+        <div className="mt-3">
           <label>Password</label>
           <input
             type="password"
@@ -83,8 +114,9 @@ export const Signup = () => {
             onChange={(e) => handleSubmit(e, "password")}
           />
         </div>
+        {errors.password && <div className="error">{errors.password}</div>}
 
-        <div className="mb-5">
+        <div className="mt-3">
           <label>Confirm Password</label>
           <input
             type="password"
@@ -94,9 +126,9 @@ export const Signup = () => {
             onChange={(e) => handleSubmit(e, "cpassword")}
           />
         </div>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {errors.cpassword && <div className="error">{errors.cpassword}</div>}
 
-        <div className="d-grid">
+        <div className="d-grid mt-3">
           <button
             type="submit"
             className="btn btn-primary"

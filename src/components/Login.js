@@ -26,7 +26,7 @@ export const Login = () => {
       <form>
         <h3>Login</h3>
 
-        <div className="mt-3 mb-3">
+        <div className="mt-3">
           <label>Email address</label>
           <input
             type="email"
@@ -37,7 +37,7 @@ export const Login = () => {
           />
         </div>
 
-        <div className="mb-5">
+        <div className="mt-3">
           <label>Password</label>
           <input
             type="password"
@@ -48,12 +48,13 @@ export const Login = () => {
           />
         </div>
 
-        <div className="d-grid">
+
+        <div className="d-grid mt-4">
           <button
             type="submit"
             className="btn btn-primary"
             onClick={(e) => onSubmitBtn(e)}
-          >
+            >
             Submit
           </button>
         </div>
