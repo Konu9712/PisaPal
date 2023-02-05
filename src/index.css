@@ -86,3 +86,15 @@ html,
 .forgot-password a {
   color: #167bff;
 }
+
+.error{
+  color: red;
+  width: 100%;
+  border: 1px solid red;
+  background-color: #ecc7c4;
+  border-radius: 6px;
+  padding: 4px;
+  font-size: 12px;
+  margin-top: 3px;
+
+}
