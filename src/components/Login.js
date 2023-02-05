@@ -3,12 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
-    name: "",
     email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -17,8 +16,7 @@ export const Login = () => {
     setUser({ ...user, [type]: e.target.value });
   };
 
-  const onSubmitBtn = (e) => {
-    
+  const onSubmitBtn = async (e) => {
     e.preventDefault();
 
     let formErrors = {};
@@ -36,15 +34,21 @@ export const Login = () => {
     setErrors(formErrors);
 
     if (!Object.keys(formErrors).length) {
-
-      axios.post("http://localhost:8000/auth/login", user).then((res) => {
-        localStorage.setItem("token", JSON.stringify(res.data.token));
-        navigate("/dashboard");
-        setErrors({});
-      });
-
+      const res = await axios
+        .post("http://localhost:8000/auth/login", user)
+        .then((res) => {
+          localStorage.setItem("token", JSON.stringify(res.data.token));
+          navigate("/dashboard");
+          setErrors({});
+        })
+        .catch((err) => {
+          console.log("err", err.response.status);
+          if (err.response.status === 400) {
+            formErrors.credential = "Email or Password is incorrect";
+            setErrors(formErrors);
+          }
+        });
     }
-
   };
 
   return (
@@ -81,9 +85,12 @@ export const Login = () => {
             type="submit"
             className="btn btn-primary"
             onClick={(e) => onSubmitBtn(e)}
-            >
+          >
             Submit
           </button>
+          {errors.credential && (
+            <div className="error">{errors.credential}</div>
+          )}
         </div>
       </form>
     </div>
