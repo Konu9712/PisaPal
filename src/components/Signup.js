@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export const Signup = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -10,7 +13,6 @@ export const Signup = () => {
 
   const handleSubmit = (e, type) => {
     e.preventDefault();
-    console.log(type);
     setUser({ ...user, [type]: e.target.value });
   };
 
@@ -58,6 +60,7 @@ export const Signup = () => {
         async (response) => {
           if (response.status === 200) {
             console.log("success");
+            navigate("/sign-in");
           } else if (response.status === 400) {
             response = await response.json();
             formErrors.cpassword = response.error;
