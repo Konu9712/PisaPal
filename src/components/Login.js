@@ -38,6 +38,7 @@ export const Login = () => {
         .post("http://localhost:8000/auth/login", user)
         .then((res) => {
           localStorage.setItem("token", JSON.stringify(res.data.token));
+          localStorage.setItem("userId", JSON.stringify(res.data.userId));
           navigate("/dashboard");
           setErrors({});
         })
