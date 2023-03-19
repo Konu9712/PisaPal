@@ -24,6 +24,7 @@ function App() {
     e.preventDefault();
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
+    window.location.reload(true);
     //navigate("/sign-in");
   };
 
@@ -48,7 +49,7 @@ function App() {
                       (
                         <ul className="navbar-nav ml-auto">
                           <li className="nav-item">
-                            <Link className="nav-link" to={"/sign-in"} onClick={(e) => btnLogout(e)}>
+                            <Link className="nav-link" onClick={(e) => btnLogout(e)}  to={"/sign-in"}>
                               Logout
                             </Link>
                           </li>
