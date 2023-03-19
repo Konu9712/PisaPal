@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Login } from "./components/Login.js";
 import { Signup } from "./components/Signup.js";
 import { Dashboard } from "./Pages/Dashboard/Dashboard";
+import { CreateGroup } from "./Pages/CreateGroup/CreateGroup";
+import { Create } from "@mui/icons-material";
 //import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -77,16 +79,15 @@ function App() {
           </div>
         </nav>
 
-        <div className="auth-wrapper">
-          <div className="auth-inner">
+
             <Routes>
               <Route exact path="/" element={<Login />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/create-group" element={<CreateGroup />} />
             </Routes>
-          </div>
-        </div>
+
       </div>
     </Router>
   );
