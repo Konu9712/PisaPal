@@ -40,6 +40,7 @@ export const Login = () => {
           localStorage.setItem("token", JSON.stringify(res.data.token));
           localStorage.setItem("userId", JSON.stringify(res.data.userId));
           navigate("/dashboard");
+          window.location.reload(true);
           setErrors({});
         })
         .catch((err) => {

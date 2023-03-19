@@ -12,17 +12,9 @@ export const Dashboard = () => {
     }
   }, []);
 
-  const btnLogout = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    navigate("/sign-in");
-  };
-
   return (
     <div>
       Dashboard
-      <button onClick={(e) => btnLogout(e)}>Logout</button>
     </div>
   );
 
