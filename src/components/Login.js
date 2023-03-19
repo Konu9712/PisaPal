@@ -54,47 +54,49 @@ export const Login = () => {
   };
 
   return (
-    <div>
-      <form>
-        <h3>Login</h3>
+    <div className="wrapper">
+      <div className="auth-inner">
+        <form>
+          <h3>Login</h3>
 
-        <div className="mt-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            value={user.email}
-            onChange={(e) => handleSubmit(e, "email")}
-          />
-        </div>
-        {errors.email && <div className="error">{errors.email}</div>}
+          <div className="mt-3">
+            <label>Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Enter email"
+              value={user.email}
+              onChange={(e) => handleSubmit(e, "email")}
+            />
+          </div>
+          {errors.email && <div className="error">{errors.email}</div>}
 
-        <div className="mt-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            value={user.password}
-            onChange={(e) => handleSubmit(e, "password")}
-          />
-        </div>
-        {errors.password && <div className="error">{errors.password}</div>}
+          <div className="mt-3">
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Enter password"
+              value={user.password}
+              onChange={(e) => handleSubmit(e, "password")}
+            />
+          </div>
+          {errors.password && <div className="error">{errors.password}</div>}
 
-        <div className="d-grid mt-4">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={(e) => onSubmitBtn(e)}
-          >
-            Submit
-          </button>
-          {errors.credential && (
-            <div className="error">{errors.credential}</div>
-          )}
-        </div>
-      </form>
+          <div className="d-grid mt-4">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={(e) => onSubmitBtn(e)}
+            >
+              Submit
+            </button>
+            {errors.credential && (
+              <div className="error">{errors.credential}</div>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
