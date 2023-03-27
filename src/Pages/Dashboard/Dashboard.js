@@ -1,11 +1,9 @@
-
 import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 export const Dashboard = () => {
-  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,28 +20,44 @@ export const Dashboard = () => {
           <h3>Dashboard</h3>
         </div>
         <Link className="col-auto nav-link" to={"/create-group"}>
-          <h5 className="child"><FontAwesomeIcon icon={faPlusCircle} /></h5>
+          <h5 className="child">
+            <FontAwesomeIcon icon={faPlusCircle} />
+          </h5>
           <h5 className="child">Create Group</h5>
         </Link>
       </div>
       <div class="row mt-3">
         <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
+          <div className="box">
+            <p>1</p>
+          </div>
         </div>
         <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
+          <div className="box">
+            <p>1</p>
+          </div>
         </div>
         <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
+          <div className="box">
+            <p>1</p>
+          </div>
         </div>
         <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
+          <div className="box">
+            <p>1</p>
+          </div>
         </div>
         <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
+          <div className="box">
+            <p>1</p>
+          </div>
+        </div>
+        <div class="col-3 box-outer">
+          <div className="box">
+            <p>1</p>
+          </div>
         </div>
       </div>
     </div>
   );
-
 };
