@@ -48,6 +48,7 @@ export const Signup = () => {
     if (!Object.keys(formErrors).length) {
 
       //post request
+      
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },

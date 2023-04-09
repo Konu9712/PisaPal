@@ -34,11 +34,11 @@ export const Login = () => {
     setErrors(formErrors);
 
     if (!Object.keys(formErrors).length) {
-      const res = await axios
+      await axios
         .post("http://localhost:8000/auth/login", user)
         .then((res) => {
-          localStorage.setItem("token", JSON.stringify(res.data.token));
-          localStorage.setItem("userId", JSON.stringify(res.data.userId));
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("userId", res.data.userId);
           navigate("/dashboard");
           window.location.reload(true);
           setErrors({});

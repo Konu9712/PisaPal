@@ -7,7 +7,6 @@ import { Login } from "./components/Login.js";
 import { Signup } from "./components/Signup.js";
 import { Dashboard } from "./Pages/Dashboard/Dashboard";
 import { CreateGroup } from "./Pages/CreateGroup/CreateGroup";
-import { Create } from "@mui/icons-material";
 //import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -50,6 +49,11 @@ function App() {
                     { token ?
                       (
                         <ul className="navbar-nav ml-auto">
+                          <li className="nav-item">
+                            <Link className="nav-link" to={"/dashboard"}>
+                              Dashboard
+                            </Link>
+                          </li>
                           <li className="nav-item">
                             <Link className="nav-link" onClick={(e) => btnLogout(e)}  to={"/sign-in"}>
                               Logout

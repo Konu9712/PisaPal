@@ -112,3 +112,7 @@ span {
 .cursorPointer {
   cursor: pointer;
 }
+
+.groupName{
+  margin-left: 10px;
+}
