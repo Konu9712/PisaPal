@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +8,10 @@ export const Dashboard = () => {
   
   const navigate = useNavigate();
 
+  const [group, setGroup] = useState({
+    groupArray: []
+  });
+
   useEffect(() => {
 
     const token = localStorage.getItem("token");
@@ -15,6 +19,26 @@ export const Dashboard = () => {
       navigate("/sign-in");
     }
     
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" ,
+                  "authorization" : localStorage.getItem('token'),
+              },
+    };
+
+    fetch('http://localhost:8000/getgroups', requestOptions).then(
+        async (response) => {
+          if (response.status === 200) {
+            response = await response.json();
+            group.groupArray = response;
+            setGroup({ ...group, ['groupArray']: response });
+          } else if (response.status === 400) {
+            response = await response.json();
+            console.log(response.error);
+          }
+        }
+      );
+
   }, []);
 
   return (
@@ -28,21 +52,21 @@ export const Dashboard = () => {
           <h5 className="child">Create Group</h5>
         </Link>
       </div>
-      <div class="row mt-3">
-        <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
-        </div>
-        <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
-        </div>
-        <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
-        </div>
-        <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
-        </div>
-        <div class="col-3 box-outer">
-          <div className="box"><p>1</p></div>
+      <div>
+        <div class="row mt-3">
+          {
+              (() => {
+                let container = [];
+                group.groupArray.forEach((val, index) => {
+                  container.push(
+                      <div class="col-3 box-outer">
+                        <div className="box"><p>{val.groupName}</p></div>
+                      </div>
+                    )
+                });
+                return container;
+              })()
+            }
         </div>
       </div>
     </div>

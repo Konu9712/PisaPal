@@ -98,7 +98,7 @@ export const CreateGroup = () => {
         if (group.selectedUserArray.length == 0) {
           formErrors.groupArray = "You have to select user";
         } else if (group.selectedUserArray.length < 2) {
-            formErrors.groupArray = "You have to select atleat 2 users";
+          formErrors.groupArray = "You have to select atleat 2 users";
         }
     
         setErrors(formErrors);
@@ -129,6 +129,7 @@ export const CreateGroup = () => {
               if (response.status === 200) {
                 console.log("success");
                 navigate("/dashboard");
+                window.location.reload(true);
               } else if (response.status === 400) {
                 response = await response.json();
                 console.log(response.error);
