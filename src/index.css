@@ -116,3 +116,9 @@ span {
 .groupName{
   margin-left: 10px;
 }
+
+.removeLine{
+  text-decoration: none !important;
+  color: black;
+  font-weight: 600;
+}
