@@ -42,6 +42,11 @@ export const Dashboard = () => {
     );
   }, []);
 
+  const openGroupDetail = (e, val) => {
+    e.preventDefault();
+    navigate("/group-detail",{state: { groupDetail : val} });
+  };
+
   return (
     <div className="container section-p1">
       <div className="row mt-5">
@@ -57,17 +62,21 @@ export const Dashboard = () => {
       </div>
       <div>
         <div class="row mt-3">
-          {group?.groupArray?.length > 0 &&
-            group.groupArray.map((val, index) => {
-              console.log(group.groupArray);
-              return (
-                <div className="col-3 box-outer">
-                  <div className="box">
-                    <p>{val.groupName}</p>
-                  </div>
-                </div>
-              );
-            })}
+          {
+              (() => {
+                let container = [];
+                group.groupArray.forEach((val, index) => {
+                  container.push(
+                      <div class="col-3 box-outer" onClick={(e) => openGroupDetail(e, val)}>
+                        <a href="" className="removeLine">
+                        < div className="box"><p>{val.groupName}</p></div>
+                        </a>
+                      </div>
+                    )
+                });
+                return container;
+              })()
+            }
         </div>
       </div>
     </div>

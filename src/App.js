@@ -7,7 +7,9 @@ import { Login } from "./components/Login.js";
 import { Signup } from "./components/Signup.js";
 import { Dashboard } from "./Pages/Dashboard/Dashboard";
 import { CreateGroup } from "./Pages/CreateGroup/CreateGroup";
-//import { useNavigate } from "react-router-dom";
+import { GroupDetail } from "./Pages/GroupDetail/GroupDetail";
+import { AddCategory } from "./Pages/GroupDetail/AddCategory";
+import { AddExpense } from "./Pages/GroupDetail/AddExpense";
 
 function App() {
 
@@ -90,6 +92,9 @@ function App() {
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/create-group" element={<CreateGroup />} />
+              <Route path="/group-detail" element={<GroupDetail />} />
+              <Route path="/add-category" element={<AddCategory />} />
+              <Route path="/add-expense" element={<AddExpense />} />
             </Routes>
 
       </div>
