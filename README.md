@@ -1,4 +1,4 @@
-# Project Name
+# PisaPal
 
 A Tricount-style app for managing group transactions.
 
