@@ -127,7 +127,9 @@ export const AddExpense  = () => {
             const arr = [];
 
             expense.userArray.forEach((val, index) => {
-                arr.push(val.email);
+                if(val.isChecked) {
+                    arr.push(val.email);
+                }
               });
 
           const requestOptions = {
@@ -149,6 +151,7 @@ export const AddExpense  = () => {
             async (response) => {
               if (response.status === 200) {
                 console.log("success");
+                alert("Expense successfully added");
               } else if (response.status === 400) {
                 response = await response.json();
                 console.log(response.error);

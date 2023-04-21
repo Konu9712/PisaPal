@@ -9,7 +9,11 @@ export const Login = () => {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    email : "",
+    password : "",
+    serverError : ""
+  });
 
   const handleSubmit = (e, type) => {
     e.preventDefault();
@@ -19,35 +23,43 @@ export const Login = () => {
   const onSubmitBtn = async (e) => {
     e.preventDefault();
 
-    let formErrors = {};
-
     if (!user.email) {
-      formErrors.email = "Email is required";
+      errors.email = "Email is required";
+      setErrors({ ...errors, ["email"]: "Email is required" });
     } else if (!/\S+@\S+\.\S+/.test(user.email)) {
-      formErrors.email = "Email address is invalid";
+      errors.email = "Email address is invalid";
+      setErrors({ ...errors, ["email"]: "Email address is invalid" });
+    } else {
+      errors.email = ""
+      setErrors({ ...errors, ["email"]: "" });
     }
 
     if (!user.password) {
-      formErrors.password = "Password is required";
+      errors.password = "Password is required";
+      setErrors({ ...errors, ["password"]: "Password is required" });
+    } else {
+      errors.password = "";
+      setErrors({ ...errors, ["password"]: "" });
     }
 
-    setErrors(formErrors);
-
-    if (!Object.keys(formErrors).length) {
+    if (errors.email == "" && errors.password == "") {
       await axios
         .post("http://localhost:8000/auth/login", user)
         .then((res) => {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("userId", res.data.userId);
+          localStorage.setItem("email", user.email);
           navigate("/dashboard");
           window.location.reload(true);
-          setErrors({});
+          setErrors({ ...errors, ["email"]: "" });
+          setErrors({ ...errors, ["password"]: "" });
+          setErrors({ ...errors, ["serverError"]: "" });
         })
         .catch((err) => {
           console.log("err", err.response.status);
           if (err.response.status === 400) {
-            formErrors.credential = "Email or Password is incorrect";
-            setErrors(formErrors);
+            errors.serverError = "Email or Password is incorrect";
+            setErrors({ ...errors, ["serverError"]: "Email or Password is incorrect" });
           }
         });
     }
@@ -91,8 +103,8 @@ export const Login = () => {
             >
               Submit
             </button>
-            {errors.credential && (
-              <div className="error">{errors.credential}</div>
+            {errors.serverError && (
+              <div className="error">{errors.serverError}</div>
             )}
           </div>
         </form>
