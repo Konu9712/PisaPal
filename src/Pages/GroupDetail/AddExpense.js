@@ -13,7 +13,8 @@ export const AddExpense  = () => {
         category: "",
         amount : "",
         categoryArray : [],
-        userArray : []
+        userArray : [],
+        screenTitle : ""
     });
 
     const [errors, setErrors] = useState({});
@@ -51,10 +52,33 @@ export const AddExpense  = () => {
             const user = {
                 email : users[i],
                 amount : 0.00,
-                isChecked : true
+                isChecked : location.state.isFrom === "Edit" ? false : true
             }
             tempArray.push(user);  
         }
+
+        if(location.state.isFrom === "Edit") {
+
+             expense.screenTitle = "Edit Expense";
+             var amt = location.state.expense.expenseAmount / location.state.expense.dividedPeople.length;
+
+             tempArray.forEach((user, index) => {
+                location.state.expense.dividedPeople.forEach((involveUser, index) => {
+                    if(user.email === involveUser) {
+                        user.isChecked = true;
+                        user.amount = amt;
+                    }
+                });
+             });
+
+            expense.expenseName = location.state.expense.expenseName;
+            expense.category = location.state.expense.expenseCatagory;
+            expense.amount = location.state.expense.expenseAmount;
+    
+          } else {
+            expense.screenTitle = "Add Expense";
+          }
+
         expense.userArray = tempArray;
         setExpense({ ...expense, ["userArray"]: tempArray});
 
@@ -133,7 +157,7 @@ export const AddExpense  = () => {
               });
 
           const requestOptions = {
-            method: "POST",
+            method: location.state.isFrom === "Edit" ? "PUT" : "POST",
             headers: { 
                 "Content-Type": "application/json", 
                 "authorization" : localStorage.getItem('token'),
@@ -146,12 +170,23 @@ export const AddExpense  = () => {
             }),
 
           };
+
+          var url = "";
+          if(location.state.isFrom === "Edit") {
+            url = "http://localhost:8000/updateExpense/" + location.state.groupDetail.groupId + "/" + location.state.expense.expenseId;
+          } else {
+            url = "http://localhost:8000/createExpense/" + location.state.groupDetail.groupId;
+          }
     
-          fetch('http://localhost:8000/createExpense/' + location.state.groupDetail.groupId, requestOptions).then(
+          fetch(url, requestOptions).then(
             async (response) => {
               if (response.status === 200) {
                 console.log("success");
-                alert("Expense successfully added");
+                if(location.state.isFrom === "Edit") {
+                    alert("Expense successfully edited");
+                } else {
+                    alert("Expense successfully added");
+                }
               } else if (response.status === 400) {
                 response = await response.json();
                 console.log(response.error);
@@ -177,7 +212,7 @@ export const AddExpense  = () => {
 
         <div className="container section-p1">
             <div className="row mt-5">
-                <h3 className="col-12">{location.state.groupDetail.groupName} - Add Expense</h3>
+                <h3 className="col-12">{location.state.groupDetail.groupName} - {expense.screenTitle}</h3>
                 <label className="col mt-5">Expense Name</label>
                 <input
                     type="text"
@@ -206,6 +241,7 @@ export const AddExpense  = () => {
                     id="combo-box-demo"
                     options={expense.categoryArray}
                     className="mt-2"
+                    inputValue={expense.category}
                     renderInput={(params) => <TextField {...params} label="Select Category" />}
                     onChange={(e) => handleAutoComplete(e, "category")}
                 />
