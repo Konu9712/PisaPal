@@ -5,8 +5,6 @@ import TextField from '@mui/material/TextField';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRemove } from '@fortawesome/free-solid-svg-icons';
 
-
-
 export const CreateGroup = () => {
 
     const navigate = useNavigate();
