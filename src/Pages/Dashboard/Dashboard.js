@@ -27,13 +27,9 @@ export const Dashboard = () => {
     fetch("http://localhost:8000/getgroups", requestOptions).then(
       async (response) => {
         if (response.status === 200) {
-          response = await response.json();
-          group.groupArray = response;
-          const filteredGroups = response?.groups?.filter(
-            (group) => group !== null
-          );
-          console.log("filteredGroups", filteredGroups);
-          setGroup({ ...group, ["groupArray"]: filteredGroups });
+            var res = await response.json();
+            group.groupArray = res.groups;
+            setGroup({ ...group, ['groupArray']: res });
         } else if (response.status === 400) {
           response = await response.json();
           console.log(response.error);

@@ -10,6 +10,7 @@ import { CreateGroup } from "./Pages/CreateGroup/CreateGroup";
 import { GroupDetail } from "./Pages/GroupDetail/GroupDetail";
 import { AddCategory } from "./Pages/GroupDetail/AddCategory";
 import { AddExpense } from "./Pages/GroupDetail/AddExpense";
+import { ExpenseDetail } from "./Pages/GroupDetail/ExpenseDetail";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
     e.preventDefault();
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
+    localStorage.removeItem("email");
     window.location.reload(true);
     //navigate("/sign-in");
   };
@@ -95,6 +97,7 @@ function App() {
               <Route path="/group-detail" element={<GroupDetail />} />
               <Route path="/add-category" element={<AddCategory />} />
               <Route path="/add-expense" element={<AddExpense />} />
+              <Route path="/expense-detail" element={<ExpenseDetail />} />
             </Routes>
 
       </div>

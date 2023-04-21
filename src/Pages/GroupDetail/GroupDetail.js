@@ -11,8 +11,9 @@ export const GroupDetail = () => {
   const { groupDetail } = state;
 
   const [expense, setExpense] = useState({
-    expenseArray: [],
-});
+    totalAmount: 0,
+    expenseArray: []
+  });
 
   useEffect(() => {
 
@@ -37,6 +38,17 @@ export const GroupDetail = () => {
             console.log(response.expense);
             expense.expenseArray = response.expense;
             setExpense({ ...expense, ["expenseArray"]: response.expense });
+            var amount = 0;
+            for (let i = 0; i < response.expense.length; i++) {
+              if(response.expense[i].dividedPeople.indexOf(localStorage.getItem("email")) > -1){
+                const tempAmt = response.expense[i].expenseAmount / response.expense[i].dividedPeople.length;
+                amount = amount + tempAmt;
+              }
+            }
+            expense.totalAmount = amount;
+            console.log(amount);
+            console.log(expense.totalAmount);
+            setExpense({ ...expense, ["totalAmount"]: amount });
           } else if (response.status === 400) {
             response = await response.json();
             console.log(response.error);
@@ -45,6 +57,11 @@ export const GroupDetail = () => {
       );
 
   }, []);
+
+  const openExpenseDetail = (e, val) => {
+    e.preventDefault();
+    navigate("/expense-detail",{state: { groupDetail : groupDetail, expenseDetail: val} });
+  };
 
   return (
     <div className="container section-p1">
@@ -63,27 +80,37 @@ export const GroupDetail = () => {
             </Link>
         </div>
         <div className="mt-5">
-            <h4 className="col-12 mb-5">Expenses</h4>
+          <div className="row mb-5">
+              <h4 className="col">Expenses</h4>
+              <h5 className="col-auto">Total Expense : $ {expense.totalAmount.toFixed(2)}</h5>
+          </div>
             <div>
                 {
                     (() => {
                     let container = [];
                     expense.expenseArray.forEach((val, index) => {
-                        const amount = val.expenseAmount / val.dividedPeople.length;
-                        console.log(amount);
+                        var amount = "";
+                        if(val.dividedPeople.indexOf(localStorage.getItem("email")) > -1){
+                          amount = "$ " + parseFloat(val.expenseAmount / val.dividedPeople.length).toFixed(2);
+                        } else {
+                          amount = "You are not involved"
+                        }
                         container.push(
-                        <div className="row" key={index}>
-                            <div className="row">
-                                <h4 className="col">{val.expenseName}</h4>
-                                <h4 className="col-auto">$ {amount.toFixed(2)}</h4>
-                            </div>
-                            <div className="row">
-                                <label className="col-auto">Paid By : {val.expenseBy}</label>
-                                <label className="col">Category : {val.expenseCatagory}</label>
-                                <label className="col-auto">{val.expenseDate}</label>
-                            </div>
-                            <hr className="mt-2" />
-                        </div>)
+                        <a href="#" className="removeLine">
+                          <div className="row" key={index} onClick={(e) => openExpenseDetail(e, val)}>
+                              <div className="row">
+                                  <h4 className="col">{val.expenseName}</h4>
+                                  <h4 className="col-auto">{amount}</h4>
+                              </div>
+                              <div className="row">
+                                  <label className="col-auto">Paid By : {val.expenseBy}</label>
+                                  <label className="col">Category : {val.expenseCatagory}</label>
+                                  <label className="col-auto">{val.expenseDate}</label>
+                              </div>
+                              <hr className="mt-2" />
+                          </div>
+                        </a>
+                        )
                     });
                     return container;
                     })()
