@@ -113,7 +113,7 @@ export const AddExpense  = () => {
             } else {
                 newArray[i].amount = 0.00;
             }  
-            }
+        }
 
         expense.userArray = newArray;
         //setExpense({ ...expense, ["userArray"]: newArray });
@@ -206,6 +206,7 @@ export const AddExpense  = () => {
         newArray[index].isChecked = e.target.checked;
         expense.userArray = newArray;
         setExpense({ ...expense, [userArray]: newArray });
+        calculateUserPrice(expense.amount);
     };
 
     return(
