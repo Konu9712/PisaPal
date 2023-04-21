@@ -20,6 +20,31 @@ export const ExpenseDetail = () => {
 
   }, []);
 
+  const btnDeleteTransaction = (e) => {
+    e.preventDefault();
+
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("token"),
+      },
+    };
+
+    fetch("http://localhost:8000/deleteExpense/" + groupDetail.groupId + "/" + expenseDetail.expenseId, requestOptions).then(
+      async (response) => {
+        if (response.status === 200) {
+            navigate("/group-detail",{state: { groupDetail : groupDetail} });
+        } else if (response.status === 400) {
+          response = await response.json();
+          console.log(response.error);
+        }
+      }
+    );
+
+  };
+
   return (
     <div className="container section-p1">
       <div className="row mt-5">
@@ -59,7 +84,7 @@ export const ExpenseDetail = () => {
       </div>
       <div className="d-grid gap-2 d-md-flex justify-content-md-center mt-5">
         <button type="submit" className="btn btn-primary" > Edit Transaction </button>
-        <button type="submit" className="btn btn-danger" > Delete Transaction </button>
+        <button type="submit" className="btn btn-danger" onClick={(e) => btnDeleteTransaction(e)}> Delete Transaction </button>
       </div>
     </div>
   );
