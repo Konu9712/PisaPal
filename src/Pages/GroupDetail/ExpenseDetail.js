@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import React, { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const ExpenseDetail = () => {
   
@@ -23,7 +21,6 @@ export const ExpenseDetail = () => {
   const btnDeleteTransaction = (e) => {
     e.preventDefault();
 
-
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -43,6 +40,11 @@ export const ExpenseDetail = () => {
       }
     );
 
+  };
+
+  const btnEditTransaction = (e) => {
+    e.preventDefault();
+    navigate("/add-expense", {state: { groupDetail : groupDetail, isFrom : "Edit", expense : expenseDetail} });
   };
 
   return (
@@ -83,7 +85,7 @@ export const ExpenseDetail = () => {
         </div>
       </div>
       <div className="d-grid gap-2 d-md-flex justify-content-md-center mt-5">
-        <button type="submit" className="btn btn-primary" > Edit Transaction </button>
+        <button type="submit" className="btn btn-primary" onClick={(e) => btnEditTransaction(e)}> Edit Transaction </button>
         <button type="submit" className="btn btn-danger" onClick={(e) => btnDeleteTransaction(e)}> Delete Transaction </button>
       </div>
     </div>

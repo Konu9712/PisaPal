@@ -74,7 +74,7 @@ export const GroupDetail = () => {
             <h5 className="child"><FontAwesomeIcon icon={faPlusCircle} /></h5>
             <h5 className="child">Add Category</h5>
             </Link>
-            <Link className="nav-link" to={"/add-expense"} state={{groupDetail:groupDetail}}>
+            <Link className="nav-link" to={"/add-expense"} state={{groupDetail:groupDetail, isFrom: "Add"}}>
             <h5 className="child"><FontAwesomeIcon icon={faPlusCircle} /></h5>
             <h5 className="child">Add Expense</h5>
             </Link>
